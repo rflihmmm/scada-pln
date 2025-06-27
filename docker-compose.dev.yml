@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres_dev
+    environment:
+      POSTGRES_DB: ${DB_NAME:-myapp}
+      POSTGRES_USER: ${DB_USER:-myuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-mypassword}
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - dev-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: go_backend_dev
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-myuser}
+      DB_PASSWORD: ${DB_PASSWORD:-mypassword}
+      DB_NAME: ${DB_NAME:-myapp}
+      JWT_SECRET: ${JWT_SECRET:-default-secret}
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - go_mod_cache:/go/pkg/mod
+    depends_on:
+      - postgres
+    networks:
+      - dev-network
+    user: "${UID:-1000}:${GID:-1000}"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: svelte_frontend_dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - npm_cache:/home/node/.npm
+    networks:
+      - dev-network
+    user: "${UID:-1000}:${GID:-1000}"
+
+volumes:
+  postgres_dev_data:
+  go_mod_cache:
+  npm_cache:
+
+networks:
+  dev-network:
+    driver: bridge
