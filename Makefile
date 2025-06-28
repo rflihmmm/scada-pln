@@ -1,6 +1,6 @@
 .PHONY: dev build clean test migrate setup-permissions
 
-# Get current user UID and GID
+# Get current user UID and GID for Fedora compatibility
 export UID := $(shell id -u)
 export GID := $(shell id -g)
 
@@ -13,18 +13,22 @@ setup:
 	@touch backend/.air.toml
 	@echo "Setup completed!"
 
-# Fix permissions
+# Fix permissions for Fedora/SELinux
 fix-permissions:
-	@echo "Fixing file permissions..."
-	@sudo chown -R $(UID):$(GID) .
+	@echo "Fixing file permissions for Fedora..."
 	@chmod -R 755 .
 	@chmod -R 644 backend/*.go backend/*.mod backend/*.sum backend/.air.toml || true
 	@chmod -R 644 frontend/package*.json || true
 	@chmod +x scripts/*.sh || true
+	@# Fix SELinux context if SELinux is enabled
+	@if command -v getenforce >/dev/null 2>&1 && [ "$(getenforce)" != "Disabled" ]; then \
+		echo "Fixing SELinux context..."; \
+		sudo chcon -Rt svirt_sandbox_file_t . 2>/dev/null || true; \
+	fi
 	@echo "Permissions fixed!"
 
 # Development
-dev: setup
+dev: setup fix-permissions
 	@echo "Starting development environment..."
 	@echo "Using UID=$(UID) GID=$(GID)"
 	docker-compose -f docker-compose.dev.yml up --build
@@ -80,15 +84,15 @@ test-frontend:
 # Package management
 install-go:
 	@read -p "Enter Go package name: " package; \
-	./scripts/install-go-package.sh $package
+	./scripts/install-go-package.sh $$package
 
 install-npm:
 	@read -p "Enter NPM package name: " package; \
-	./scripts/install-npm-package.sh $package
+	./scripts/install-npm-package.sh $$package
 
 install-npm-dev:
 	@read -p "Enter NPM dev package name: " package; \
-	./scripts/install-npm-package.sh $package --dev
+	./scripts/install-npm-package.sh $$package --dev
 
 # Container access
 backend-shell:

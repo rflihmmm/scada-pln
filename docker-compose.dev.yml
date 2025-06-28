@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-mypassword}
     volumes:
       - postgres_dev_data:/var/lib/postgresql/data
-      - ./database/init:/docker-entrypoint-initdb.d:ro
+      #- ./database/init:/docker-entrypoint-initdb.d:ro
     ports:
       - "5432:5432"
     networks:
@@ -19,6 +19,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     container_name: go_backend_dev
     environment:
       DB_HOST: postgres
@@ -31,28 +34,29 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./backend:/app
-      - go_mod_cache:/go/pkg/mod
+      - ./backend:/app:Z
+      - go_mod_cache:/go/pkg/mod:Z
     depends_on:
       - postgres
     networks:
       - dev-network
-    user: "${UID:-1000}:${GID:-1000}"
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
+      args:
+        USER_ID: ${UID:-1000}
+        GROUP_ID: ${GID:-1000}
     container_name: svelte_frontend_dev
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app:Z
       - /app/node_modules
-      - npm_cache:/home/node/.npm
+      - npm_cache:/home/node/.npm:Z
     networks:
       - dev-network
-    user: "${UID:-1000}:${GID:-1000}"
 
 volumes:
   postgres_dev_data:

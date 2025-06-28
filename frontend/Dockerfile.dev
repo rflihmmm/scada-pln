@@ -1,7 +1,24 @@
 FROM node:22-bookworm
 
+# Accept build args for user ID
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+# Modify existing node user to match host UID/GID
+RUN groupmod -g ${GROUP_ID} node && \
+    usermod -u ${USER_ID} -g ${GROUP_ID} node
+
+# Create and set permissions for working directory
+RUN mkdir -p /app && \
+    chown -R node:node /app /home/node
+
 WORKDIR /app
-COPY package*.json ./
+
+# Switch to non-root user
+USER node
+
+# Copy package files
+COPY --chown=node:node package*.json ./
 RUN npm install
 
 EXPOSE 5173

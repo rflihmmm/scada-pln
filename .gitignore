@@ -1,0 +1,320 @@
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+.pnpm-store/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Go specific
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go dependency management
+backend/vendor/
+
+# Go build cache
+backend/.cache/
+
+# Air live reload
+backend/tmp/
+backend/build-errors.log
+
+# Go workspace file
+backend/go.work
+backend/go.work.sum
+
+# Frontend specific (Svelte/SvelteKit)
+frontend/.svelte-kit/
+frontend/build/
+frontend/dist/
+frontend/.output/
+frontend/.vercel/
+frontend/.netlify/
+
+# Frontend dependencies and cache
+frontend/node_modules/
+frontend/.pnpm-store/
+frontend/.npm/
+
+# Vite cache
+frontend/.vite/
+
+# Svelte kit
+frontend/.svelte-kit/
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/pnpm-lock.yaml
+
+# Frontend environment
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Docker
+# Don't ignore docker-compose files as they are needed
+# But ignore override files that might contain sensitive data
+docker-compose.override.yml
+docker-compose.prod.yml
+
+# Database
+# Ignore database dumps and backups
+*.sql.gz
+*.dump
+database/backups/
+database/dumps/
+
+# PostgreSQL
+*.backup
+*.bak
+
+# Docker volumes (if using local docker-compose.yml with local volumes)
+postgres_data/
+postgres_dev_data/
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+*.pfx
+
+# Terraform (if using infrastructure as code)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Ansible (if using for deployment)
+*.retry
+
+# Kubernetes secrets (if using k8s)
+*secret*.yaml
+*secret*.yml
+
+# Local development files
+.local/
+tmp/
+temp/
+*.tmp
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# Python (if using any Python scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Rust (if using any Rust tools)
+target/
+Cargo.lock
+
+# MacOS specific
+.AppleDouble
+.LSOverride
+
+# Linux specific
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json.example
+!.vscode/launch.json.example
+!.vscode/tasks.json.example
+!.vscode/extensions.json.example
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+
+# Local configuration files that shouldn't be shared
+config.local.json
+settings.local.json
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Test artifacts
+coverage/
+test-results/
+.nyc_output/
+
+# Monitoring and profiling
+*.prof
+*.trace
+
+# Local scripts that are personal/machine specific
+local-setup.sh
+personal-notes.md
+TODO.md
+NOTES.md
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+
+# Cache directories
+.cache/
+cache/
+.temp/
+
+# Lock files (uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# go.sum
+
+# Generated files
+generated/
+auto-generated/
+
+# Deployment artifacts
+deploy/
+deployment/
+.deploy/
+
+# Secrets and sensitive files
+secrets/
+private/
+confidential/
+.secrets/
+
+# CI/CD artifacts
+.github/workflows/secrets/
+.gitlab-ci-local/
+
+# Cloud provider credentials
+.aws/
+.azure/
+.gcp/
+
+# Local development overrides
+docker-compose.local.yml
+local.env
+dev.env
